@@ -179,49 +179,49 @@ public class GPREListener implements Listener {
                         );
                         
                 	}
-                	else {
+//                	else {
                 		
-                		// Leasing with due time, player pays once every "X" for a subclaim.
-                		if(plugin.dataStore.cfgEnableLeasing){
-                			
-                			//if(2 > 10){
-                				if(!period.matches("^([0-9]{1,3})(w|d|h){1}$")){
-    	                			player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "The leasing period you wrote is not correct.");
-    	                			event.getBlock().breakNaturally();
-    	                            event.setCancelled(true);
-    	                            return;
-    	                		}
-    	                		
-    	                		event.setLine(0, plugin.dataStore.cfgSignLong);
-    	                        event.setLine(1, ChatColor.DARK_GREEN + plugin.dataStore.cfgReplaceRent);
-    	                        event.setLine(2, player.getName());
-    	                        event.setLine(3, price + " " + GPRealEstate.econ.currencyNamePlural());
-    	                		
-    	                        player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.AQUA + "You are now leasing this subclaim for " + ChatColor.GREEN + price + " " + GPRealEstate.econ.currencyNamePlural());
-    	
-    	                        plugin.addLogEntry(
-    	                    		"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " has made a subclaim for lease at "
-    	                    		+ "[" + player.getLocation().getWorld() + ", "
-    	                    		+ "X: " + player.getLocation().getBlockX() + ", "
-    	                    		+ "Y: " + player.getLocation().getBlockY() + ", "
-    	                    		+ "Z: " + player.getLocation().getBlockZ() + "] "
-    	                    		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural()
-    	                        );
-                			//}
+//                		// Leasing with due time, player pays once every "X" for a subclaim.
+//                		if(plugin.dataStore.cfgEnableLeasing){
+//                			
+//                			//if(2 > 10){
+//                				if(!period.matches("^([0-9]{1,3})(w|d|h){1}$")){
+//    	                			player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "The leasing period you wrote is not correct.");
+//    	                			event.getBlock().breakNaturally();
+//    	                            event.setCancelled(true);
+//    	                            return;
+//    	                		}
+//    	                		
+//    	                		event.setLine(0, plugin.dataStore.cfgSignLong);
+//    	                        event.setLine(1, ChatColor.DARK_GREEN + plugin.dataStore.cfgReplaceRent);
+//    	                        event.setLine(2, player.getName());
+//    	                        event.setLine(3, price + " " + GPRealEstate.econ.currencyNamePlural());
+//    	                		
+//    	                        player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.AQUA + "You are now leasing this subclaim for " + ChatColor.GREEN + price + " " + GPRealEstate.econ.currencyNamePlural());
+//    	
+//    	                        plugin.addLogEntry(
+//    	                    		"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " has made a subclaim for lease at "
+//    	                    		+ "[" + player.getLocation().getWorld() + ", "
+//    	                    		+ "X: " + player.getLocation().getBlockX() + ", "
+//    	                    		+ "Y: " + player.getLocation().getBlockY() + ", "
+//    	                    		+ "Z: " + player.getLocation().getBlockZ() + "] "
+//    	                    		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural()
+//    	                        );
+//                			}
 //                			else {
-//                				player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "This feature is not yet fully implemented!");
+//               				player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "This feature is not yet fully implemented!");
 //                    			event.getBlock().breakNaturally();
 //                    			return;
 //                			}
-                		
-                		}
-                		else {
-                			player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "Leasing has been disabled!");
-                			event.getBlock().breakNaturally();
-                			return;
-                		}
-                        
-                	}
+//                		
+//                		}
+//                		else {
+//                			player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "Leasing has been disabled!");
+//                			event.getBlock().breakNaturally();
+//                			return;
+//                		}
+                      
+//                	}
                 	
                 }
             	else {

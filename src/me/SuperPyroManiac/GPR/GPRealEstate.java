@@ -89,15 +89,15 @@ public class GPRealEstate extends JavaPlugin {
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "The config file was succesfully reloaded.");
     				return true;
     			}
-    			else if(args[0].equalsIgnoreCase("sell")){
-    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Please use gpre sell [price]");
-    				return true;
-    			}
+//    			else if(args[0].equalsIgnoreCase("sell")){
+//    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Please use gpre sell [price]");
+//    				return true;
+//    			}
     			else if(args[0].equalsIgnoreCase("help")){
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Commands: -Permission");
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre version | -gprealestate.admin");
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre reload: | -gprealestate.admin");
-    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre sell [price]: | -gprealestate.command");
+    				//sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre sell [price]: | -gprealestate.command");
     				return true;
     			}
     			else {
@@ -106,26 +106,22 @@ public class GPRealEstate extends JavaPlugin {
     			}
     			
     		}
-    		else if(args.length == 2){
-    			 if(args[0].equalsIgnoreCase("sell")){
-    				Player pl = (Player)sender; 
-    				Location pos = pl.getLocation();
-    	            Block sign = pl.getWorld().getBlockAt(pos);
-    	            Sign s = (Sign) sign.getState();
-    	 
-    	            s.setLine(0, "[re]");
-    	            s.setLine(1, args[1]);
-    	            s.update();
-    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Success!");
-    				return true;
-    			}
-    			
-    		}
-    		
-    		else if(args.length < 2){
-    			sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Unknown. Use 'gpre help' for info");
-    			
-    		}
+//    		else if(args.length == 2){
+//    			 if(args[0].equalsIgnoreCase("sell")){
+//    				Player pl = (Player)sender; 
+//    				Location pos = pl.getLocation();
+//    	            Block sign = pl.getWorld().getBlockAt(pos);
+//    	            Sign s = (Sign) sign.getState();
+//    	 
+//    	            s.setLine(0, "[re]");
+//    	            s.setLine(1, args[1]);
+//    	            s.update();
+//    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Success!");
+//    				return true;
+//    			}
+//    			
+//    		}
+    	
     		
     		    		
     	}
