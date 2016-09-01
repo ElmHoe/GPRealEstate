@@ -19,7 +19,8 @@ public class GPRealEstate extends JavaPlugin
   public String signName;
   public String signNameLong;
 
-  public void onEnable()
+  @Override
+public void onEnable()
   {
     this.log = getLogger();
     new GPREListener(this).registerEvents();
