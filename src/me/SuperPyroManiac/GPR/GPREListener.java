@@ -65,7 +65,8 @@ public class GPREListener implements Listener {
         return true;
     }
 
-    @EventHandler 	// Player creates a sign
+    @SuppressWarnings("unused")
+	@EventHandler 	// Player creates a sign
     public void onSignChange(SignChangeEvent event){
     	
         // When a sign is being created..
@@ -183,7 +184,7 @@ public class GPREListener implements Listener {
                 		// Leasing with due time, player pays once every "X" for a subclaim.
                 		if(plugin.dataStore.cfgEnableLeasing){
                 			
-                			if(2 > 10){
+                			//if(2 > 10){
                 				if(!period.matches("^([0-9]{1,3})(w|d|h){1}$")){
     	                			player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "The leasing period you wrote is not correct.");
     	                			event.getBlock().breakNaturally();
@@ -206,12 +207,12 @@ public class GPREListener implements Listener {
     	                    		+ "Z: " + player.getLocation().getBlockZ() + "] "
     	                    		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural()
     	                        );
-                			}
-                			else {
-                				player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "This feature is not yet fully implemented!");
-                    			event.getBlock().breakNaturally();
-                    			return;
-                			}
+                			//}
+//                			else {
+//                				player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.DARK_PURPLE + "This feature is not yet fully implemented!");
+//                    			event.getBlock().breakNaturally();
+//                    			return;
+//                			}
                 		
                 		}
                 		else {

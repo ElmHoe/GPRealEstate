@@ -15,6 +15,9 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -69,30 +72,62 @@ public class GPRealEstate extends JavaPlugin {
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	
-    	if(command.getName().equalsIgnoreCase("gpre") && sender.hasPermission("gprealestate.admin")){
+    	if(command.getName().equalsIgnoreCase("gpre") && sender.hasPermission("gprealestate.command")){
     		
     		if(args.length == 0){
-    			sender.sendMessage(dataStore.chatPrefix + ChatColor.RED + "Unknown command function.");
+    			sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Unknown. Use 'gpre help' for info.");
     			return true;
     		}
     		else if(args.length == 1){
     			
-    			if(args[0].equalsIgnoreCase("version")){
+    			if(args[0].equalsIgnoreCase("version") && sender.hasPermission("gprealestate.admin")){
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "You are running " + ChatColor.RED + dataStore.pdf.getName() + ChatColor.GREEN + " version " + ChatColor.RED + dataStore.pdf.getVersion());
     				return true;
     			}
-    			else if(args[0].equalsIgnoreCase("reload")){
+    			else if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("gprealestate.admin")){
     				loadConfig(true); 
     				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "The config file was succesfully reloaded.");
     				return true;
     			}
+    			else if(args[0].equalsIgnoreCase("sell")){
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Please use gpre sell [price]");
+    				return true;
+    			}
+    			else if(args[0].equalsIgnoreCase("help")){
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Commands: -Permission");
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre version | -gprealestate.admin");
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre reload: | -gprealestate.admin");
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "gpre sell [price]: | -gprealestate.command");
+    				return true;
+    			}
     			else {
-    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "I don't know what to do with that.");
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Unknown. Use 'gpre help' for info");
         			return true;
     			}
     			
     		}
+    		else if(args.length == 2){
+    			 if(args[0].equalsIgnoreCase("sell")){
+    				Player pl = (Player)sender; 
+    				Location pos = pl.getLocation();
+    	            Block sign = pl.getWorld().getBlockAt(pos);
+    	            Sign s = (Sign) sign.getState();
+    	 
+    	            s.setLine(0, "[re]");
+    	            s.setLine(1, args[1]);
+    	            s.update();
+    				sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Success!");
+    				return true;
+    			}
+    			
+    		}
     		
+    		else if(args.length < 2){
+    			sender.sendMessage(dataStore.chatPrefix + ChatColor.GREEN + "Unknown. Use 'gpre help' for info");
+    			
+    		}
+    		
+    		    		
     	}
     	else {
     		sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command.");
