@@ -1,13 +1,7 @@
 GPRealEstate:
-  Keywords:
-    Signs:
-      Short: '[RE]'
-      Long: '[RealEstate]'
-    Actions:
-      Renting: 'Lease;Leasing;For Lease'
-      Selling: 'Sell;Selling;For Sale'
-      ReplaceRent: 'FOR LEASE'
-      ReplaceSell: 'FOR SALE'
+  Keyword:
+  	Short: '[RE]'
+  	Long: '[RealEstate]'
   Rules:
   	IgnoreClaimLimit: false
   
