@@ -69,7 +69,7 @@ public class GPRealEstate extends JavaPlugin {
     
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	
-    	if(command.getName().equalsIgnoreCase("gpre") && sender.hasPermission("gprealestate.admin")){
+    	if(command.getName().equalsIgnoreCase("gpre")){
     		
     		if(args.length == 0){
     			sender.sendMessage(dataStore.chatPrefix + ChatColor.RED + "Unknown command function.");
@@ -93,10 +93,6 @@ public class GPRealEstate extends JavaPlugin {
     			
     		}
     		
-    	}
-    	else {
-    		sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command.");
-			return false;
     	}
     	
     	return false;
