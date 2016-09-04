@@ -9,9 +9,11 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,26 +39,26 @@ public class GPREListener implements Listener {
         pm.registerEvents(this, this.plugin);
     }
     
-    private boolean makePayment(Player sender, String reciever, Double price){
-    	if (!GPRealEstate.econ.has(sender.getName(), price.doubleValue())) {
+    private boolean makePayment(Player sender, OfflinePlayer reciever, Double price){
+    	if (!GPRealEstate.econ.has(sender, price.doubleValue())) {
     		sender.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You do not have enough money!");
             return false;
         }
 
-        EconomyResponse ecoresp = GPRealEstate.econ.withdrawPlayer(sender.getName(), price.doubleValue());
+        EconomyResponse ecoresp = GPRealEstate.econ.withdrawPlayer(sender, price.doubleValue());
 
         if (!ecoresp.transactionSuccess()) {
         	sender.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "Could not withdraw the money!");
             return false;
         }
 
-        if (!reciever.equalsIgnoreCase("server")) {
+        if (!reciever.getName().equalsIgnoreCase("server")) {
 
             ecoresp = GPRealEstate.econ.depositPlayer(reciever, price.doubleValue());
 
             if (!ecoresp.transactionSuccess()) {
             	sender.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "Could not transfer money, refunding Player!");
-                GPRealEstate.econ.depositPlayer(sender.getName(), price.doubleValue());
+                GPRealEstate.econ.depositPlayer(sender, price.doubleValue());
                 return false;
             }
 
@@ -65,7 +67,6 @@ public class GPREListener implements Listener {
         return true;
     }
 
-    @SuppressWarnings("unused")
 	@EventHandler 	// Player creates a sign
     public void onSignChange(SignChangeEvent event){
     	
@@ -86,10 +87,22 @@ public class GPREListener implements Listener {
             }
             
             if (event.getLine(1).isEmpty()) {
-            	// The player did NOT enter a price on the second line.
-            	player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You need to enter the price on the second line!");
-                event.setCancelled(true);
-                return;
+           	// The player did NOT enter a price on the second line.
+            	int newValue = plugin.dataStore.cfgReplaceValue;
+            	int claimValue = gp.dataStore.getClaimAt(event.getBlock().getLocation(), false, null).getArea();
+            	String thePrice = Integer.toString(newValue * claimValue);
+            	event.setLine(1, thePrice);
+                plugin.addLogEntry(
+                    	"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " has made a claim for sale at [" 
+                    	+ player.getLocation().getWorld() + ", "
+                    	+ "X: " + player.getLocation().getBlockX() + ", "
+                    	+ "Y: " + player.getLocation().getBlockY() + ", "
+                    	+ "Z: " + player.getLocation().getBlockZ() + "] "
+                    	+ "Price: " + thePrice + " " + GPRealEstate.econ.currencyNamePlural()
+                    );
+               // player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You need to enter the price on the second line!");
+               // event.setCancelled(true);
+               // return;
             }
             
             String price = event.getLine(1);
@@ -175,8 +188,7 @@ public class GPREListener implements Listener {
                     		+ "X: " + player.getLocation().getBlockX() + ", "
                     		+ "Y: " + player.getLocation().getBlockY() + ", "
                     		+ "Z: " + player.getLocation().getBlockZ() + "] "
-                    		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural()
-                        );
+                    		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
                         
                 	}
 //                	else {
@@ -237,7 +249,8 @@ public class GPREListener implements Listener {
     	
     }
 
-    @EventHandler 	// Player interacts with a block.
+    @SuppressWarnings("deprecation")
+	@EventHandler 	// Player interacts with a block.
     public void onSignInteract(PlayerInteractEvent event) {
     	
     	if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
@@ -323,7 +336,7 @@ public class GPREListener implements Listener {
 	                			
                 				if((claim.getArea() <= gp.dataStore.getPlayerData(player.getUniqueId()).getAccruedClaimBlocks()) || player.hasPermission("gprealestate.ignore.limit")){
                 					
-                					if(makePayment(player, sign.getLine(2), price)){
+                					if(makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price)){
                 					
 		                                try {
 		
@@ -359,7 +372,7 @@ public class GPREListener implements Listener {
 		                                }
 		
 		                                //gp.dataStore.saveClaim(claim);
-		                                event.getClickedBlock().setType(Material.AIR);
+		                                event.getClickedBlock().breakNaturally();
 		                                return;
 	                                
                 					}
@@ -384,7 +397,7 @@ public class GPREListener implements Listener {
                 				
                 				if (GPRealEstate.perms.has(player, "gprealestate.subclaim.buy")) {
                 					
-                					if(makePayment(player, sign.getLine(2), price)){
+                					if(makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price)){
 
 	                                    claim.clearPermissions();
 	

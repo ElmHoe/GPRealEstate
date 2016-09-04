@@ -1,7 +1,6 @@
 package me.SuperPyroManiac.GPR;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +31,7 @@ public class DataStore {
     
     public String cfgReplaceRent;
     public String cfgReplaceSell;
+    public int cfgReplaceValue;
     
     public boolean cfgEnableLeasing;
     public boolean cfgIgnoreClaimSize;

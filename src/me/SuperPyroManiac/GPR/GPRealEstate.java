@@ -4,24 +4,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
-
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -139,6 +129,7 @@ public class GPRealEstate extends JavaPlugin {
     	FileConfiguration config = YamlConfiguration.loadConfiguration(new File(dataStore.configFilePath));
         FileConfiguration outConfig = new YamlConfiguration();
         
+        
     	// Loading the config file items that exsists or setting the default values.
         dataStore.cfgSignShort = config.getString("GPRealEstate.Keywords.Signs.Short", "[RE]");
         dataStore.cfgSignLong = config.getString("GPRealEstate.Keywords.Signs.Long", "[RealEstate]");
@@ -148,6 +139,7 @@ public class GPRealEstate extends JavaPlugin {
         
         dataStore.cfgReplaceRent = config.getString("GPRealEstate.Keywords.Actions.ReplaceRent", "FOR LEASE");
         dataStore.cfgReplaceSell = config.getString("GPRealEstate.Keywords.Actions.ReplaceSell", "FOR SALE");
+        dataStore.cfgReplaceValue = config.getInt("GPRealEstate.Keywords.Actions.BuyPrice", 5);
         
         dataStore.cfgEnableLeasing = config.getBoolean("GPRealEstate.Rules.EnableLeasing", false);
         dataStore.cfgIgnoreClaimSize = config.getBoolean("GPRealEstate.Rules.IgnoreSizeLimit", false);
@@ -164,6 +156,7 @@ public class GPRealEstate extends JavaPlugin {
         outConfig.set("GPRealEstate.Keywords.Actions.Selling", dataStore.listToString(dataStore.cfgSellKeywords));
         outConfig.set("GPRealEstate.Keywords.Actions.ReplaceRent", dataStore.cfgReplaceRent);
         outConfig.set("GPRealEstate.Keywords.Actions.ReplaceSell", dataStore.cfgReplaceSell);
+        outConfig.set("GPRealEstate.Keywords.Actions.BuyPrice", dataStore.cfgReplaceValue);
         outConfig.set("GPRealEstate.Rules.EnableLeasing", dataStore.cfgEnableLeasing);
         outConfig.set("GPRealEstate.Rules.IgnoreSizeLimit", dataStore.cfgIgnoreClaimSize);
         
@@ -200,14 +193,14 @@ public class GPRealEstate extends JavaPlugin {
     }
 
     private boolean setupEconomy(){
-        RegisteredServiceProvider rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) return false;
         econ = (Economy)rsp.getProvider();
         return econ != null;
     }
 
     private boolean setupPermissions(){
-        RegisteredServiceProvider rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = (Permission)rsp.getProvider();
         return perms != null;
     }
