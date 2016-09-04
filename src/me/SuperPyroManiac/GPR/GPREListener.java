@@ -165,6 +165,24 @@ public class GPREListener implements Listener {
                 }
                 
             }
+            else if (claim.parent.isAdminClaim()){
+            	if (GPRealEstate.perms.has(player, "gprealestate.admin")) {
+            		event.setLine(0, plugin.dataStore.cfgSignLong);
+                    event.setLine(1, ChatColor.DARK_GREEN + plugin.dataStore.cfgReplaceSell);
+                    event.setLine(2, player.getName());
+                    event.setLine(3, price + " " + GPRealEstate.econ.currencyNamePlural());
+                    
+                    player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.AQUA + "You are now selling access to this admin subclaim for " + ChatColor.GREEN + price + " " + GPRealEstate.econ.currencyNamePlural());
+
+                    plugin.addLogEntry(
+                		"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " has made an admin subclaim access for sale at "
+                		+ "[" + player.getLocation().getWorld() + ", "
+                		+ "X: " + player.getLocation().getBlockX() + ", "
+                		+ "Y: " + player.getLocation().getBlockY() + ", "
+                		+ "Z: " + player.getLocation().getBlockZ() + "] "
+                		+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
+            	}
+            }
             else if ((player.getName().equalsIgnoreCase(claim.parent.getOwnerName())) || (claim.managers.equals(player.getName()))) {
             	// This is a "subclaim"
             	
@@ -398,8 +416,33 @@ public class GPREListener implements Listener {
                 				if (GPRealEstate.perms.has(player, "gprealestate.subclaim.buy")) {
                 					
                 					if(makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price)){
+                						 claim.clearPermissions();
+                						//This  is an admin subclaim
+                						if(claim.parent.isAdminClaim()) {
+                							if (player != Bukkit.getOfflinePlayer(sign.getLine(2))) {
+                							GPRealEstate.econ.withdrawPlayer(Bukkit.getOfflinePlayer(sign.getLine(2)), price);
+    	                                    claim.setPermission(player.getUniqueId().toString(), ClaimPermission.Build);	// Allowing the player to build in the subclaim!
+    	                                    gp.dataStore.saveClaim(claim);
+    	                                    event.getClickedBlock().breakNaturally();
+    	                                    
+    	                                    player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.AQUA + "You have successfully purchased this admin subclaim for " + ChatColor.GREEN + price + GPRealEstate.econ.currencyNamePlural());
+    	                                    plugin.addLogEntry(
+    	                                    	"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " Has purchased an admin subclaim at "
+    	                                    	+ "[" + player.getLocation().getWorld() + ", "
+    	                                    	+ "X: " + player.getLocation().getBlockX() + ", "
+    	                                    	+ "Y: " + player.getLocation().getBlockY() + ", "
+    	                                    	+ "Z: " + player.getLocation().getBlockZ() + "] "
+    	                                    	+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
 
-	                                    claim.clearPermissions();
+                							}
+                							else {
+                								player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You can't buy the same claim you are selling!");
+                                				return;
+                							}
+                						}
+                						else {
+
+	                                   
 	
 	                                    if (!sign.getLine(2).equalsIgnoreCase("server")) {
 	                                        claim.managers.remove(sign.getLine(2));
@@ -422,6 +465,7 @@ public class GPREListener implements Listener {
 	                                    );
 	                                    return;
                                     
+                					}
                 					}
 
                                 } else {
