@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/Rande/Documents/Java Resources/GriefPrevention.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rande/Documents/Java Resources/MinecraftDev.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rande/Documents/Java Resources/Vault.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_101"/>
+	<classpathentry kind="lib" path="D:/Minecraft plugin/jar/GriefPrevention.jar"/>
+	<classpathentry kind="lib" path="D:/Minecraft plugin/jar/spigot-api-1.10.2-R0.1-SNAPSHOT-shaded.jar"/>
+	<classpathentry kind="lib" path="D:/Minecraft plugin/jar/Vault.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
