@@ -35,6 +35,7 @@ public class DataStore {
     
     public boolean cfgEnableLeasing;
     public boolean cfgIgnoreClaimSize;
+    public boolean cfgAllowSellingParentAC;
     
     public DataStore(GPRealEstate plugin){
     	this.plugin = plugin;

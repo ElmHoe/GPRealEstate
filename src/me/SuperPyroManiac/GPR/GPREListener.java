@@ -147,22 +147,46 @@ public class GPREListener implements Listener {
                     );
             	
                 }
-                else {
-                	
-                	if (claim.isAdminClaim()){
-                		// This is a "Admin Claim" they cannot be sold!
-                        if (player.hasPermission("gprealestate.admin")) {
-                            player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You cannot sell admin claims, they can only be leased!");
-                            event.setCancelled(true);
-                            return;
-                        }
-                    }
+				else if (claim.isAdminClaim()){
+					if (player.hasPermission("gprealestate.admin")) {
+						if(plugin.dataStore.cfgAllowSellingParentAC){
+							event.setLine(0, plugin.dataStore.cfgSignLong);
+							event.setLine(1, ChatColor.DARK_GREEN + plugin.dataStore.cfgReplaceSell);
+							event.setLine(2, player.getName());
+							event.setLine(3, price + " " + GPRealEstate.econ.currencyNamePlural());
 
-                	player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You can only sell claims you own!");
-                    event.setCancelled(true);
-                    return;
-                    
-                }
+							player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.AQUA + "You are now selling this admin claim for " + ChatColor.GREEN + price + " " + GPRealEstate.econ.currencyNamePlural());
+
+							plugin.addLogEntry(
+									"[" + this.dateFormat.format(this.date) + "] " + player.getName() + " has made an admin claim for sale at "
+											+ "[" + player.getLocation().getWorld() + ", "
+											+ "X: " + player.getLocation().getBlockX() + ", "
+											+ "Y: " + player.getLocation().getBlockY() + ", "
+											+ "Z: " + player.getLocation().getBlockZ() + "] "
+											+ "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
+						}
+
+						else {  
+							// This is a "Admin Claim" they cannot be sold!
+							player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You cannot sell admin claims, they can only be leased!");
+							event.setCancelled(true);
+							return;
+						}
+					} else {
+					player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You can only sell claims you own!");
+					event.setCancelled(true);
+					return;
+					}
+				}
+
+				else {
+
+					player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You can only sell claims you own!");
+					event.setCancelled(true);
+					return;
+
+
+				}
                 
             }
             else if (claim.parent.isAdminClaim()){

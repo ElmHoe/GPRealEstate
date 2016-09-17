@@ -17,7 +17,8 @@ GPRealEstate:
 
       #EnableLeasing: - If true, it allows player to rent claims out, and charge a player every x amount of time. CURRENTLY NOT FULLY IMPLIMENTED, LEAVE AS FALSE!
       #IgnoreClaimLimit: - If true the plugin will sell someone the claim even if they exceed their claim limit set by Grief Prevention.
-      
+      #AllowSellingParentAC: - If true the plugin will allow you to sell parent adminclaims.
   Rules:
      EnableLeasing: false
      IgnoreClaimLimit: false
+     AllowSellingParentAC: false
