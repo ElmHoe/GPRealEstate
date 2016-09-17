@@ -142,7 +142,6 @@ public class GPRealEstate extends JavaPlugin {
         dataStore.cfgReplaceValue = config.getInt("GPRealEstate.Keywords.Actions.BuyPrice", 5);
         
         dataStore.cfgEnableLeasing = config.getBoolean("GPRealEstate.Rules.EnableLeasing", false);
-        dataStore.cfgAllowSellingParentAC = config.getBoolean("GPRealEstate.Rules.AllowSellingParentAC", false);
         dataStore.cfgIgnoreClaimSize = config.getBoolean("GPRealEstate.Rules.IgnoreSizeLimit", false);
         
         if(!reload) {
@@ -160,7 +159,6 @@ public class GPRealEstate extends JavaPlugin {
         outConfig.set("GPRealEstate.Keywords.Actions.BuyPrice", dataStore.cfgReplaceValue);
         outConfig.set("GPRealEstate.Rules.EnableLeasing", dataStore.cfgEnableLeasing);
         outConfig.set("GPRealEstate.Rules.IgnoreSizeLimit", dataStore.cfgIgnoreClaimSize);
-        outConfig.set("GPRealEstate.Rules.AllowSellingParentAC", dataStore.cfgAllowSellingParentAC);
         
         try {
         	outConfig.save(dataStore.configFilePath);
