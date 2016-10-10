@@ -149,6 +149,7 @@ public class GPREListener implements Listener {
                 }
 				else if (claim.isAdminClaim()){
 					if (player.hasPermission("gprealestate.admin")) {
+						// This is an admin claim, we are checking if it's enabled in the config.
 						if(plugin.dataStore.cfgAllowSellingParentAC){
 							event.setLine(0, plugin.dataStore.cfgSignLong);
 							event.setLine(1, ChatColor.DARK_GREEN + plugin.dataStore.cfgReplaceSell);
@@ -167,7 +168,7 @@ public class GPREListener implements Listener {
 						}
 
 						else {  
-							// This is a "Admin Claim" they cannot be sold!
+							// This is a "Admin Claim" they cannot be sold unless enabled in config!
 							player.sendMessage(plugin.dataStore.chatPrefix + ChatColor.RED + "You cannot sell admin claims, they can only be leased!");
 							event.setCancelled(true);
 							return;
@@ -291,7 +292,7 @@ public class GPREListener implements Listener {
     	
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") //Future Self - If something doesn't work it's because of this! We are using usernames instead of UIID's. Which may be removed at any time.
 	@EventHandler 	// Player interacts with a block.
     public void onSignInteract(PlayerInteractEvent event) {
     	
@@ -373,7 +374,7 @@ public class GPREListener implements Listener {
                 		
                 		if(claim.parent == null){
                 			
-                			// This is a normal claim.
+                			// This is a normal claim. This also includes admin claims if they are enabled in the config.
                 			if (GPRealEstate.perms.has(player, "gprealestate.claim.buy")) {
 	                			
                 				if((claim.getArea() <= gp.dataStore.getPlayerData(player.getUniqueId()).getAccruedClaimBlocks()) || player.hasPermission("gprealestate.ignore.limit")){

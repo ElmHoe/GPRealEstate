@@ -22,3 +22,4 @@ GPRealEstate:
      EnableLeasing: false
      IgnoreClaimLimit: false
      AllowSellingParentAC: false
+      #Reccomended you leave this false. It allows users with gprealestate.admin to sell adminclaims!
